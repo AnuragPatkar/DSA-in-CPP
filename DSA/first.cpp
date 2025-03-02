@@ -2687,4 +2687,5 @@ int main()
 
 
 
-anurag patkar
+#include<stdio.h>
+int main{};
