@@ -2687,5 +2687,4 @@ int main()
 
 
 
-#include<stdio.h>
-int main{};
+bhanu pratp patkar
