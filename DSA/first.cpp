@@ -763,7 +763,7 @@ int main()
     return 0;
 } */
 
-/* //! Fourth Task: Double linked list
+/* //! Fourth Task: Doubly linked list
 #include <iostream>
 #include <stdio.h>
 using namespace std;
@@ -1966,7 +1966,7 @@ public:
     {
         front = NULL;
         rear = NULL;
-        if (q.front == NULL) 
+        if (q.front == NULL)
         {
             return;
         }
@@ -2260,7 +2260,7 @@ Deque ::~Deque()
     delete[] ptr;
 } */
 
-/* //! 14th Task: Deque using linked list
+/* //! 14th Task: Deque using Doubly linked list
 #include <iostream>
 using namespace std;
 struct node
@@ -2683,8 +2683,190 @@ int main()
     pq.display();
 } */
 
-//! 17th Task:
+//! 17th Task: Tree
+#include <iostream>
+using namespace std;
+struct node
+{
+    node *left;
+    int item;
+    node *right;
+};
+class BST
+{
+private:
+    node *root;
 
+public:
+    BST();
+    BST(const BST &b);
+    const BST &operator=(const BST &b);
+    node *copyTree(node *);
+    bool isEmpty();
+    void insert(int);
+    void preorder(node *);
+    void inorder(node *);
+    void postorder(node *);
+    void del(node *, int);
+    bool search(node *, int);
+    void display();
+    void destroyTree(node *);
+    ~BST();
+};
+BST::BST()
+{
+    root = NULL;
+}
+BST::BST(const BST &b)
+{
+    root = NULL;
+    if (b.root == NULL)
+        return;
+    root = copyTree(b.root);
+}
+node *BST::copyTree(node *otherroot)
+{
+    if (otherroot == NULL)
+        return NULL;
+    node *newnode = new node;
+    newnode->item = otherroot->item;
+    newnode->left = copyTree(otherroot->left);
+    newnode->right = copyTree(otherroot->right);
+    return newnode;
+}
+const BST &BST::operator=(const BST &b)
+{
+    if (this != &b)
+    {
 
+        destroyTree(root);
+        root = NULL;
+        if (b.root == NULL)
+            return *this;
+        root = copyTree(b.root);
+    }
+    return *this;
+}
+bool BST::isEmpty()
+{
+    return root == NULL;
+}
+void BST::insert(int data)
+{
+    node *newnode = new node;
+    newnode->item = data;
+    newnode->left = NULL;
+    newnode->right = NULL;
+    if (isEmpty())
+    {
+        root = newnode;
+        return;
+    }
+    node *t = root;
+    while (true)
+    {
+        if (data < t->item)
+        {
+            if (t->left == NULL)
+            {
+                t->left = newnode;
+                break;
+            }
+            t = t->left;
+        }
+        else
+        {
+            if (t->right == NULL)
+            {
+                t->right = newnode;
+                break;
+            }
+            t = t->right;
+        }
+    }
+}
+void BST::preorder(node *root)
+{
+    if (root)
+    {
+        cout << root->item << " ";
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+void BST::inorder(node *root)
+{
+    if (root)
+    {
+        inorder(root->left);
+        cout << root->item << " ";
+        inorder(root->right);
+    }
+}
+void BST::postorder(node *root)
+{
+    if (root)
+    {
+        postorder(root->left);
+        postorder(root->right);
+        cout << root->item << " ";
+    }
+}
+void BST::del(node *root, int d)
+{
+    if (root == NULL)
+    {
+        cout << "Tree is Empty." << endl;
+        return;
+    }
+    
+}
+bool BST::search(node *root, int data)
+{
+    while (root != NULL)
+    {
+        if (data == root->item)
+            return true;
 
-bhanu pratp patkar
+        if (data < root->item)
+        {
+            root = root->left;
+        }
+        else
+        {
+            root = root->right;
+        }
+    }
+    return false;
+}
+void BST::display()
+{
+    inorder(this->root);
+    cout << endl;
+}
+void BST::destroyTree(node *root)
+{
+    if (root)
+    {
+        destroyTree(root->left);
+        destroyTree(root->right);
+        delete root;
+        root = NULL;
+    }
+}
+BST::~BST()
+{
+    destroyTree(root);
+}
+
+int main()
+{
+    BST b;
+    b.insert(50);
+    b.insert(20);
+    b.insert(40);
+    b.insert(80);
+    b.insert(60);
+
+    b.display();
+}
