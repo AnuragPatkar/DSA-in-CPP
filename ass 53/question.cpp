@@ -101,7 +101,122 @@ void BST::postorder(node *root)
     }
 } */
 
-//? 8. In question 1, define a method to delete an element from BST
+/* //? 8. In question 1, define a method to delete an element from BST
+void BST::del(int data)
+{
+    if (root == NULL)
+    {
+        cout << "Tree is Empty." << endl;
+        return;
+    }
+    node *ptr=root, *parptr=NULL;
+    while (ptr)
+    {
+        if (ptr->item == data)
+            break;
+        if (data < ptr->item)
+        {
+            parptr = ptr;
+            ptr = ptr->left;
+        }
+        else
+        {
+            parptr = ptr;
+            ptr = ptr->right;
+        }
+    }
+    if (ptr == NULL)
+        throw DATA_NOT_FOUND;
+    if (parptr == NULL && ptr != NULL) // root node to be deleted
+    {
+        if (ptr->left == NULL && ptr->right == NULL) // no chlid
+        {
+            delete ptr;
+            root = NULL;
+        }
+        else if (ptr->left && ptr->right) // two child class
+        {
+            node *suc,*parsuc;
+            suc=ptr->right;
+            parsuc=ptr;
+            while(suc->left!=NULL)
+            {
+                parsuc=suc;
+                suc=suc->left;
+            }
+            ptr->item=suc->item;
+            // now delete successor
+
+            if(suc==parsuc->left)
+            parsuc->left=suc->right;
+            else
+            parsuc->right=suc->right;
+            delete suc;
+        }
+        else // one chlid
+        {
+            if (ptr->left)
+                root = ptr->left;
+            else
+                root = ptr->right;
+            delete ptr;
+        }
+    }
+    else // node to be deleted is not a root node
+    {
+        if (ptr->left == NULL && ptr->right == NULL) // no chlid
+        {
+            if (ptr == parptr->left) // ptr is left child of parent ptr
+            {
+                parptr->left = NULL;
+                delete ptr;
+            }
+            else // ptr is right child of parent ptr
+            {
+                parptr->right = NULL;
+                delete ptr;
+            }
+        }
+        else if (ptr->left && ptr->right) // two child class
+        {
+            node *suc,*parsuc;
+            suc=ptr->right;
+            parsuc=ptr;
+            while(suc->left!=NULL)
+            {
+                parsuc=suc;
+                suc=suc->left;
+            }
+            ptr->item=suc->item;
+            // now delete successor
+
+            if(suc==parsuc->left)
+            parsuc->left=suc->right;
+            else
+            parsuc->right=suc->right;
+            delete suc;
+        }
+        else // one chlid
+        {
+            if (ptr == parptr->left) // ptr is left child of parent ptr
+            {
+                if (ptr->left)
+                    parptr->left = ptr->left;
+                else
+                    parptr->left = ptr->right;
+                delete ptr;
+            }
+            else // ptr is right child of parent ptr
+            {
+                if (ptr->left)
+                    parptr->right = ptr->left;
+                else
+                    parptr->right = ptr->right;
+                delete ptr;
+            }
+        }
+    }
+} */
 
 /* //? 9. In question 1, define a method to search an item in the BST
 bool BST::search(node *root, int data)
