@@ -1966,11 +1966,7 @@ public:
     {
         front = NULL;
         rear = NULL;
-<<<<<<< HEAD
         if (q.front == NULL)
-=======
-        if (q.front == NULL) 
->>>>>>> 685987ef3b744ee1db9228189617fb9456d17525
         {
             return;
         }
@@ -2264,11 +2260,7 @@ Deque ::~Deque()
     delete[] ptr;
 } */
 
-<<<<<<< HEAD
 /* //! 14th Task: Deque using Doubly linked list
-=======
-/* //! 14th Task: Deque using linked list
->>>>>>> 685987ef3b744ee1db9228189617fb9456d17525
 #include <iostream>
 using namespace std;
 struct node
