@@ -4499,7 +4499,7 @@ public:
     }
 }; */
 
-//! 25 Task: Sorting
+/*//! 25 Task: Sorting
 #include <iostream>
 using namespace std;
 void bubbleSort(int arr[], int size)
@@ -4576,9 +4576,82 @@ void selectionSort(int arr[], int size)
         arr[j] = temp;
     }
 }
-void quickSort(int arr[], int left, int right)
+int partition(int arr[], int low, int high)
 {
+    int pivot = arr[low]; // First element as pivot
+    int i = low + 1;      // Start from next element
+    int j = high;         // Start from last element
+
+    while (true)
+    {
+        // Move i to the right till we find an element greater than pivot
+        while (i <= j && arr[i] <= pivot)
+            i++;
+
+        // Move j to the left till we find an element smaller than pivot
+        while (arr[j] > pivot)
+            j--;
+
+        if (i >= j) // If indices cross, partition is done
+            break;
+
+        swap(arr[i], arr[j]); // Swap out-of-place elements
+    }
+    swap(arr[low], arr[j]); // Swap pivot with its correct position
+    return j;               // Return pivot index
 }
+void quickSort(int arr[], int low, int high)
+{
+    if (low < high)
+    {
+        int p = partition(arr, low, high);
+        quickSort(arr, low, p - 1);
+        quickSort(arr, p + 1, high);
+    }
+}
+void merge(int arr[], int left, int mid, int right)
+{
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    // Temporary arrays
+    int leftArr[n1], rightArr[n2];
+
+    // Copy data to temporary arrays
+    for (int i = 0; i < n1; i++)
+        leftArr[i] = arr[left + i];
+    for (int j = 0; j < n2; j++)
+        rightArr[j] = arr[mid + 1 + j];
+
+    // Merge the two arrays
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2)
+    {
+        if (leftArr[i] <= rightArr[j])
+            arr[k++] = leftArr[i++];
+        else
+            arr[k++] = rightArr[j++];
+    }
+
+    // Copy remaining elements
+    while (i < n1)
+        arr[k++] = leftArr[i++];
+    while (j < n2)
+        arr[k++] = rightArr[j++];
+}
+
+// Merge Sort Function
+void mergeSort(int arr[], int left, int right)
+{
+    if (left < right)
+    {
+        int mid = left + (right - left) / 2; // Find the middle point
+        mergeSort(arr, left, mid);           // Sort first half
+        mergeSort(arr, mid + 1, right);       // Sort second half
+        merge(arr, left, mid, right);         // Merge the two halves
+    }
+}
+
 // Function to print array
 void printArray(int arr[], int size)
 {
@@ -4596,10 +4669,11 @@ int main()
     cout << "Original array: ";
     printArray(arr, size);
 
-    quickSort(arr, 0, size - 1);
+    mergeSort(arr, 0, size - 1);
 
     cout << "Sorted array: ";
     printArray(arr, size);
 
     return 0;
-}
+} */
+
