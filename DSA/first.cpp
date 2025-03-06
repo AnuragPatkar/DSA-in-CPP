@@ -4677,3 +4677,170 @@ int main()
     return 0;
 } */
 
+/* //! 26 Task : Heap Sort
+#include <iostream>
+using namespace std;
+class Heap
+{
+private:
+    int capacity;
+    int lastindex;
+    int *ptr;
+
+public:
+    Heap();
+    Heap(int size);
+    void insert(int data);
+    int getTopElement();
+    void del();
+    void heapSort();
+    void printHeap();
+    ~Heap();
+};
+Heap::Heap()
+{
+    capacity = 0;
+    lastindex = -1;
+    ptr = NULL;
+}
+Heap::Heap(int size)
+{
+    capacity = size;
+    lastindex = -1;
+    ptr = new int[capacity];
+}
+void Heap::insert(int data)
+{
+    if (lastindex == capacity - 1)
+    {
+        cout << "Heap is full, cannot insert." << endl;
+        return;
+    }
+
+    lastindex++;
+    ptr[lastindex] = data;
+
+    // Heapify-Up to maintain heap property
+    int i = lastindex;
+    while (i > 0)
+    {
+        int parent = (i - 1) / 2; // Find parent index
+        if (ptr[parent] < ptr[i]) // Max heap condition: parent should be greater
+        {
+            swap(ptr[parent], ptr[i]); // Swap if child is greater
+            i = parent;                // Move up
+        }
+        else
+        {
+            break; // Heap property satisfied
+        }
+    }
+}
+int Heap::getTopElement()
+{
+    if (lastindex == -1)
+    {
+        cout << "Heap is Empty." << endl;
+        return -1;
+    }
+    return ptr[0];
+}
+void Heap::del()
+{
+    if (lastindex == -1)
+    {
+        cout << "Heap is Empty." << endl;
+        return;
+    }
+    ptr[0] = ptr[lastindex];
+    lastindex--;
+
+    int i = 0;
+    while (true)
+    {
+        int leftChild = 2 * i + 1;
+        int rightChild = 2 * i + 2;
+        int largest = i;
+
+        if (leftChild <= lastindex && ptr[leftChild] > ptr[largest])
+            largest = leftChild;
+        if (rightChild <= lastindex && ptr[rightChild] > ptr[largest])
+            largest = rightChild;
+
+        if (largest != i)
+        {
+            swap(ptr[i], ptr[largest]);
+            i = largest;
+        }
+        else
+            break;
+    }
+}
+void Heap::heapSort()
+{
+    int originalSize = lastindex;
+    for (int i = lastindex; i > 0; i--)
+    {
+        swap(ptr[0], ptr[i]);
+        lastindex--;
+        int j = 0;
+        while (true)
+        {
+            int leftChild = 2 * j + 1;
+            int rightChild = 2 * j + 2;
+            int largest = j;
+
+            if (leftChild <= lastindex && ptr[leftChild] > ptr[largest])
+                largest = leftChild;
+            if (rightChild <= lastindex && ptr[rightChild] > ptr[largest])
+                largest = rightChild;
+
+            if (largest != j)
+            {
+                swap(ptr[j], ptr[largest]);
+                j = largest;
+            }
+            else
+                break;
+        }
+    }
+    lastindex = originalSize;
+}
+void Heap::printHeap()
+{
+    for (int i = 0; i <= lastindex; i++)
+        cout << ptr[i] << " ";
+    cout << endl;
+}
+
+Heap::~Heap()
+{
+    delete[] ptr;
+}
+int main()
+{
+    Heap h(10);
+    h.insert(50);
+    h.insert(30);
+    h.insert(40);
+    h.insert(10);
+    h.insert(5);
+    h.insert(60);
+
+    cout << "Heap elements: ";
+    h.printHeap();
+
+    cout << "Top element: " << h.getTopElement() << endl;
+
+    h.del();
+    cout << "After deleting top element: ";
+    h.printHeap();
+
+    h.heapSort();
+    cout << "Sorted elements: ";
+    h.printHeap();
+
+    return 0;
+} */
+
+//! 27 Task:
