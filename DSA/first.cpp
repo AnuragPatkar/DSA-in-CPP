@@ -4499,3 +4499,107 @@ public:
     }
 }; */
 
+//! 25 Task: Sorting
+#include <iostream>
+using namespace std;
+void bubbleSort(int arr[], int size)
+{
+    int temp;
+    for (int i = 0; i < size - 1; i++)
+    {
+        for (int j = 0; j < size - 1 - i; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+void modifiedBubbleSort(int arr[], int size)
+{
+    int temp;
+    bool swapped;
+    for (int i = 0; i < size - 1; i++)
+    {
+        swapped = false;
+        for (int j = 0; j < size - 1 - i; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+
+                swapped = true;
+            }
+        }
+        if (!swapped)
+            break;
+    }
+}
+void insertionSort(int arr[], int size)
+{
+    int temp;
+    int i, j;
+    for (i = 1; i < size; i++)
+    {
+        temp = arr[i];
+        j = i - 1;
+        while (j >= 0 && arr[j] > temp)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = temp;
+    }
+}
+void selectionSort(int arr[], int size)
+{
+    for (int j = 0; j < size - 1; j++)
+    {
+        int minIndex = j;
+        int min = arr[j];
+        for (int i = j + 1; i < size; i++)
+        {
+            if (min > arr[i])
+            {
+                min = arr[i];
+                minIndex = i;
+            }
+        }
+
+        int temp = arr[minIndex];
+        arr[minIndex] = arr[j];
+        arr[j] = temp;
+    }
+}
+void quickSort(int arr[], int left, int right)
+{
+}
+// Function to print array
+void printArray(int arr[], int size)
+{
+    for (int i = 0; i < size; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+// Main function
+int main()
+{
+    int arr[] = {64, 34, 25, 12, 22, 11, 90}; // Example array
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Original array: ";
+    printArray(arr, size);
+
+    quickSort(arr, 0, size - 1);
+
+    cout << "Sorted array: ";
+    printArray(arr, size);
+
+    return 0;
+}
