@@ -4576,80 +4576,90 @@ void selectionSort(int arr[], int size)
         arr[j] = temp;
     }
 }
-int partition(int arr[], int low, int high)
+int partition(int arr[], int left, int right)
 {
-    int pivot = arr[low]; // First element as pivot
-    int i = low + 1;      // Start from next element
-    int j = high;         // Start from last element
-
-    while (true)
+    int temp;
+    int loc = left;
+    while (left < right)
     {
-        // Move i to the right till we find an element greater than pivot
-        while (i <= j && arr[i] <= pivot)
-            i++;
 
-        // Move j to the left till we find an element smaller than pivot
-        while (arr[j] > pivot)
-            j--;
-
-        if (i >= j) // If indices cross, partition is done
+        while (left < right && arr[loc] <= arr[right])
+            right--;
+        if (left == right)
             break;
+        if (arr[loc] > arr[right])
+        {
+            temp = arr[loc];
+            arr[loc] = arr[right];
+            arr[right] = temp;
+            loc = right;
+        }
 
-        swap(arr[i], arr[j]); // Swap out-of-place elements
+        while (left < right && arr[loc] > arr[left])
+            left++;
+        if (left == right)
+            break;
+        if (arr[loc] < arr[left])
+        {
+            temp = arr[loc];
+            arr[loc] = arr[left];
+            arr[left] = temp;
+            loc = left;
+        }
     }
-    swap(arr[low], arr[j]); // Swap pivot with its correct position
-    return j;               // Return pivot index
+    return loc;
 }
-void quickSort(int arr[], int low, int high)
+void quickSort(int arr[], int left, int right)
 {
-    if (low < high)
-    {
-        int p = partition(arr, low, high);
-        quickSort(arr, low, p - 1);
-        quickSort(arr, p + 1, high);
-    }
+    if (left >= right)
+        return;
+
+    int p = partition(arr, left, right);
+    quickSort(arr, left, p - 1);
+    quickSort(arr, p + 1, right);
 }
-void merge(int arr[], int left, int mid, int right)
+void merge(int arr[], int left, int m, int right)
 {
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
+    int LeftArray[m - left + 1], RightArray[right - m], i, j, k;
+    for (i = 0; i < m - left + 1; i++)
+        LeftArray[i] = arr[left + i];
+    for (j = 0; j < right - m; j++)
+        RightArray[j] = arr[m + 1 + j];
 
-    // Temporary arrays
-    int leftArr[n1], rightArr[n2];
-
-    // Copy data to temporary arrays
-    for (int i = 0; i < n1; i++)
-        leftArr[i] = arr[left + i];
-    for (int j = 0; j < n2; j++)
-        rightArr[j] = arr[mid + 1 + j];
-
-    // Merge the two arrays
-    int i = 0, j = 0, k = left;
-    while (i < n1 && j < n2)
+    for (i = 0, j = 0, k = left; i < m - left + 1 && j < right - m; k++)
     {
-        if (leftArr[i] <= rightArr[j])
-            arr[k++] = leftArr[i++];
+        if (LeftArray[i] < RightArray[j])
+        {
+            arr[k] = LeftArray[i];
+            i++;
+        }
         else
-            arr[k++] = rightArr[j++];
+        {
+            arr[k] = RightArray[j];
+            j++;
+        }
     }
-
-    // Copy remaining elements
-    while (i < n1)
-        arr[k++] = leftArr[i++];
-    while (j < n2)
-        arr[k++] = rightArr[j++];
-}
-
-// Merge Sort Function
-void mergeSort(int arr[], int left, int right)
-{
-    if (left < right)
+    while (i < m - left + 1)
     {
-        int mid = left + (right - left) / 2; // Find the middle point
-        mergeSort(arr, left, mid);           // Sort first half
-        mergeSort(arr, mid + 1, right);       // Sort second half
-        merge(arr, left, mid, right);         // Merge the two halves
+        arr[k] = LeftArray[i];
+        i++;
+        k++;
     }
+    while (j < right - m)
+    {
+        arr[k] = RightArray[j];
+        j++;
+        k++;
+    }
+}
+void mergesort(int arr[], int left, int right)
+{
+    if (left >= right)
+        return;
+    int m = left + (right - left) / 2;
+    mergesort(arr, left, m);
+    mergesort(arr, m + 1, right);
+    merge(arr, left, m, right);
 }
 
 // Function to print array
@@ -4844,3 +4854,4 @@ int main()
 } */
 
 //! 27 Task:
+

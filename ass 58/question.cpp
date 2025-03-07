@@ -84,87 +84,98 @@ void selectionSort(int arr[], int size)
 } */
 
 /* //? 5. Define a function to implement quick sort
-int partition(int arr[], int low, int high)
+int partition(int arr[], int left, int right)
 {
-    int pivot = arr[low]; // First element as pivot
-    int i = low + 1;      // Start from next element
-    int j = high;         // Start from last element
-
-    while (true)
+    int temp;
+    int loc = left;
+    while (left < right)
     {
-        // Move i to the right till we find an element greater than pivot
-        while (i <= j && arr[i] <= pivot)
-            i++;
 
-        // Move j to the left till we find an element smaller than pivot
-        while (arr[j] > pivot)
-            j--;
-
-        if (i >= j) // If indices cross, partition is done
+        while (left < right && arr[loc] <= arr[right])
+            right--;
+        if (left == right)
             break;
+        if (arr[loc] > arr[right])
+        {
+            temp = arr[loc];
+            arr[loc] = arr[right];
+            arr[right] = temp;
+            loc = right;
+        }
 
-        swap(arr[i], arr[j]); // Swap out-of-place elements
+        while (left < right && arr[loc] > arr[left])
+            left++;
+        if (left == right)
+            break;
+        if (arr[loc] < arr[left])
+        {
+            temp = arr[loc];
+            arr[loc] = arr[left];
+            arr[left] = temp;
+            loc = left;
+        }
     }
-    swap(arr[low], arr[j]); // Swap pivot with its correct position
-    return j;               // Return pivot index
+    return loc;
 }
-void quickSort(int arr[], int low, int high)
+void quickSort(int arr[], int left, int right)
 {
-    if (low < high)
-    {
-        int p = partition(arr, low, high);
-        quickSort(arr, low, p - 1);
-        quickSort(arr, p + 1, high);
-    }
+    if (left >= right)
+        return;
+
+    int p = partition(arr, left, right);
+    quickSort(arr, left, p - 1);
+    quickSort(arr, p + 1, right);
 } */
 
 /* //? 6. Define a function to implement merge sort
-void merge(int arr[], int left, int mid, int right)
+void merge(int arr[], int left, int m, int right)
 {
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
+    int LeftArray[m - left + 1], RightArray[right - m], i, j, k;
+    for (i = 0; i < m - left + 1; i++)
+        LeftArray[i] = arr[left + i];
+    for (j = 0; j < right - m; j++)
+        RightArray[j] = arr[m + 1 + j];
 
-    // Temporary arrays
-    int leftArr[n1], rightArr[n2];
-
-    // Copy data to temporary arrays
-    for (int i = 0; i < n1; i++)
-        leftArr[i] = arr[left + i];
-    for (int j = 0; j < n2; j++)
-        rightArr[j] = arr[mid + 1 + j];
-
-    // Merge the two arrays
-    int i = 0, j = 0, k = left;
-    while (i < n1 && j < n2)
+    for (i = 0, j = 0, k = left; i < m - left + 1 && j < right - m; k++)
     {
-        if (leftArr[i] <= rightArr[j])
-            arr[k++] = leftArr[i++];
+        if (LeftArray[i] < RightArray[j])
+        {
+            arr[k] = LeftArray[i];
+            i++;
+        }
         else
-            arr[k++] = rightArr[j++];
+        {
+            arr[k] = RightArray[j];
+            j++;
+        }
     }
-
-    // Copy remaining elements
-    while (i < n1)
-        arr[k++] = leftArr[i++];
-    while (j < n2)
-        arr[k++] = rightArr[j++];
-}
-
-// Merge Sort Function
-void mergeSort(int arr[], int left, int right)
-{
-    if (left < right)
+    while (i < m - left + 1)
     {
-        int mid = left + (right - left) / 2; // Find the middle point
-        mergeSort(arr, left, mid);           // Sort first half
-        mergeSort(arr, mid + 1, right);       // Sort second half
-        merge(arr, left, mid, right);         // Merge the two halves
+        arr[k] = LeftArray[i];
+        i++;
+        k++;
     }
-} */
+    while (j < right - m)
+    {
+        arr[k] = RightArray[j];
+        j++;
+        k++;
+    }
+}
+void mergesort(int arr[], int left, int right)
+{
+    if (left >= right)
+        return;
+    int m = left + (right - left) / 2;
+    mergesort(arr, left, m);
+    mergesort(arr, m + 1, right);
+    merge(arr, left, m, right);
+}*/
 
 /* //? 7. Define a class Employee with emp_id, name, salary as instance variables. Provide setters and getters in the class to access instance variables. Also define a function to sort Employee Array data by salary. Use Merge Sort.
 #include <iostream>
 using namespace std;
+
 class Employee
 {
 private:
@@ -174,60 +185,61 @@ private:
 
 public:
     Employee() {}
-    Employee(int id, string n, int s) : emp_id(id), name(n), salary(s) {}
-    void setEmployee_id(int e) { emp_id = e; }
+    Employee(int id, string n, float s) : emp_id(id), name(n), salary(s) {}
+    void setEmployee_Id(int id) { emp_id = id; }
     void setName(string n) { name = n; }
     void setSalary(float s) { salary = s; }
-    int getEmployee_id() { return emp_id; }
+    int getEmployee_ID() { return emp_id; }
     string getName() { return name; }
     float getSalary() { return salary; }
     void displayEmployee()
     {
-        cout << "Employee: " << endl;
-        cout << "ID: " << emp_id << " Name: " << name << " Salary: " << salary << endl;
+        cout << "Employee id: " << emp_id << " " << "Name: " << name << " " << "Salary: " << salary << endl;
     }
 };
-void merge(Employee arr[], int left, int mid, int right)
+void merge(Employee arr[], int left, int m, int right)
 {
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
+    Employee LeftArray[m - left + 1], RightArray[right - m];
+    int i, j, k;
+    for (i = 0; i < m - left + 1; i++)
+        LeftArray[i] = arr[left + i];
+    for (j = 0; j < right - m; j++)
+        RightArray[j] = arr[m + 1 + j];
 
-    // Temporary arrays
-    Employee leftArr[n1], rightArr[n2];
-
-    // Copy data to temporary arrays
-    for (int i = 0; i < n1; i++)
-        leftArr[i] = arr[left + i];
-    for (int j = 0; j < n2; j++)
-        rightArr[j] = arr[mid + 1 + j];
-
-    // Merge the two arrays
-    int i = 0, j = 0, k = left;
-    while (i < n1 && j < n2)
+    for (i = 0, j = 0, k = left; i < m - left + 1 && j < right - m; k++)
     {
-        if (leftArr[i].getSalary() <= rightArr[j].getSalary())
-            arr[k++] = leftArr[i++];
+        if (LeftArray[i].getSalary() < RightArray[j].getSalary())
+        {
+            arr[k] = LeftArray[i];
+            i++;
+        }
         else
-            arr[k++] = rightArr[j++];
+        {
+            arr[k] = RightArray[j];
+            j++;
+        }
     }
-
-    // Copy remaining elements
-    while (i < n1)
-        arr[k++] = leftArr[i++];
-    while (j < n2)
-        arr[k++] = rightArr[j++];
-}
-
-// Merge Sort Function
-void mergeSort(Employee arr[], int left, int right)
-{
-    if (left < right)
+    while (i < m - left + 1)
     {
-        int mid = left + (right - left) / 2; // Find the middle point
-        mergeSort(arr, left, mid);           // Sort first half
-        mergeSort(arr, mid + 1, right);      // Sort second half
-        merge(arr, left, mid, right);        // Merge the two halves
+        arr[k] = LeftArray[i];
+        i++;
+        k++;
     }
+    while (j < right - m)
+    {
+        arr[k] = RightArray[j];
+        j++;
+        k++;
+    }
+}
+void mergesort(Employee arr[], int left, int right)
+{
+    if (left >= right)
+        return;
+    int m = left + (right - left) / 2;
+    mergesort(arr, left, m);
+    mergesort(arr, m + 1, right);
+    merge(arr, left, m, right);
 }
 void printEmployees(Employee arr[], int size)
 {
@@ -236,19 +248,18 @@ void printEmployees(Employee arr[], int size)
 }
 int main()
 {
-    Employee e[5] = {Employee(101, "John", 50000),
-                     Employee(102, "Alice", 70000),
-                     Employee(103, "Bob", 45000),
-                     Employee(104, "Emma", 60000),
-                     Employee(105, "David", 55000)};
-    int n=sizeof(e)/sizeof(e[0]);
-    cout<<"Employee Details: "<<endl;
-    printEmployees(e,n);
+    Employee e[5] = {Employee(101, "Shanti", 15000.00),
+                     Employee(102, "Bhanu", 12000.00),
+                     Employee(103, "Ajay", 18000.00),
+                     Employee(104, "Deepti", 10000.00),
+                     Employee(105, "Anurag", 16000.00)};
 
-    mergeSort(e,0,n-1);
+    int size = sizeof(e) / sizeof(e[0]);
+    printEmployees(e, size);
 
-    cout<<"After Sorting(by Salary): "<<endl;
-    printEmployees(e,n);
+    mergesort(e,0,size-1);
+
+    printEmployees(e,size);
     return 0;
 } */
 
@@ -372,5 +383,139 @@ int main()
 
     cout<<"After Sorting(by Salary): "<<endl;
     printEmployees(e,n);
+    return 0;
+} */
+
+/* #include <iostream>
+using namespace std;
+
+class Employee
+{
+private:
+    int emp_id;
+    string name;
+    float salary;
+
+public:
+    Employee() {}
+    Employee(int id, string n, float s) : emp_id(id), name(n), salary(s) {}
+    void setEmployee_Id(int id) { emp_id = id; }
+    void setName(string n) { name = n; }
+    void setSalary(float s) { salary = s; }
+    int getEmployee_ID() { return emp_id; }
+    string getName() { return name; }
+    float getSalary() { return salary; }
+    void displayEmployee()
+    {
+        cout << "Employee id: " << emp_id << " " << "Name: " << name << " " << "Salary: " << salary << endl;
+    }
+};
+void merge(Employee arr[], int left, int m, int right)
+{
+    Employee LeftArray[m - left + 1], RightArray[right - m];
+    int i, j, k;
+    for (i = 0; i < m - left + 1; i++)
+        LeftArray[i] = arr[left + i];
+    for (j = 0; j < right - m; j++)
+        RightArray[j] = arr[m + 1 + j];
+
+    for (i = 0, j = 0, k = left; i < m - left + 1 && j < right - m; k++)
+    {
+        if (LeftArray[i].getSalary() < RightArray[j].getSalary())
+        {
+            arr[k] = LeftArray[i];
+            i++;
+        }
+        else
+        {
+            arr[k] = RightArray[j];
+            j++;
+        }
+    }
+    while (i < m - left + 1)
+    {
+        arr[k] = LeftArray[i];
+        i++;
+        k++;
+    }
+    while (j < right - m)
+    {
+        arr[k] = RightArray[j];
+        j++;
+        k++;
+    }
+}
+void mergesort(Employee arr[], int left, int right)
+{
+    if (left >= right)
+        return;
+    int m = left + (right - left) / 2;
+    mergesort(arr, left, m);
+    mergesort(arr, m + 1, right);
+    merge(arr, left, m, right);
+}
+
+int partition(Employee arr[], int left, int right)
+{
+    Employee temp;
+    int loc = left;
+    while (left < right)
+    {
+
+        while (left < right && arr[loc].getName() <= arr[right].getName())
+            right--;
+        if (left == right)
+            break;
+        if (arr[loc].getName() > arr[right].getName())
+        {
+            temp = arr[loc];
+            arr[loc] = arr[right];
+            arr[right] = temp;
+            loc = right;
+        }
+
+        while (left < right && arr[loc].getName() > arr[left].getName())
+            left++;
+        if (left == right)
+            break;
+        if (arr[loc].getName() < arr[left].getName())
+        {
+            temp = arr[loc];
+            arr[loc] = arr[left];
+            arr[left] = temp;
+            loc = left;
+        }
+    }
+    return loc;
+}
+void quickSort(Employee arr[], int left, int right)
+{
+    if (left >= right)
+        return;
+
+    int p = partition(arr, left, right);
+    quickSort(arr, left, p - 1);
+    quickSort(arr, p + 1, right);
+}
+void printEmployees(Employee arr[], int size)
+{
+    for (int i = 0; i < size; i++)
+        arr[i].displayEmployee();
+}
+int main()
+{
+    Employee e[5] = {Employee(101, "Shanti", 15000.00),
+                     Employee(102, "Bhanu", 12000.00),
+                     Employee(103, "Ajay", 18000.00),
+                     Employee(104, "Deepti", 10000.00),
+                     Employee(105, "Anurag", 16000.00)};
+
+    int size = sizeof(e) / sizeof(e[0]);
+    printEmployees(e, size);
+
+    // mergesort(e,0,size-1);
+    quickSort(e,0,size-1);
+
+    printEmployees(e,size);
     return 0;
 } */
