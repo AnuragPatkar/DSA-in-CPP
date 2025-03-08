@@ -4690,6 +4690,7 @@ int main()
 /* //! 26 Task : Heap Sort
 #include <iostream>
 using namespace std;
+#include <algorithm>
 class Heap
 {
 private:
