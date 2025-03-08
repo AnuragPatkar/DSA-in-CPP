@@ -1689,7 +1689,7 @@ public:
             front = q.front;
             rear = q.rear;
             ptr = new int[capacity];
-            for (int i = 0; i <capacity; i++)
+            for (int i = 0; i < capacity; i++)
             {
                 ptr[i] = q.ptr[i];
             }
@@ -1697,31 +1697,31 @@ public:
         return *this;
     }
     void insert(int data)
-{
-    if
-        return (front == 0 && rear == capacity - 1 || front == rear + 1);
     {
-        cout << "QUEUE is FULL." << endl;
-    }
-    else
-    {
-        if (front == -1)
+        if (front == 0 && rear == capacity - 1 || front == rear + 1)
         {
-            front++;
-            rear++;
-        }
-        else if (rear == capacity - 1)
-        {
-            rear = 0;
+            cout << "QUEUE is FULL." << endl;
+            return;
         }
         else
         {
-            rear++;
-        }
+            if (front == -1)
+            {
+                front++;
+                rear++;
+            }
+            else if (rear == capacity - 1)
+            {
+                rear = 0;
+            }
+            else
+            {
+                rear++;
+            }
 
-        ptr[rear] = data;
+            ptr[rear] = data;
+        }
     }
-}
     void viewRear()
     {
         if (rear == -1)
@@ -1764,7 +1764,7 @@ public:
     }
     bool overflow()
     {
-        return (front==0&& rear == capacity - 1|| front == rear + 1);
+        return (front == 0 && rear == capacity - 1 || front == rear + 1);
     }
     bool underflow()
     {
@@ -1774,8 +1774,8 @@ public:
     {
         if (front == -1)
             return 0;
-        else if(front>rear)
-            return capacity-front+rear+1;
+        else if (front > rear)
+            return capacity - front + rear + 1;
         else
             return rear - front + 1;
     }
@@ -4855,4 +4855,3 @@ int main()
 } */
 
 //! 27 Task:
-
