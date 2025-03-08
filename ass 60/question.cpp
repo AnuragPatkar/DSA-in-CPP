@@ -29,15 +29,24 @@ public:
         cout << "year: " << year << endl;
     }
 };
+struct node
+{
+    Student item;
+    node *next;
+};
 class HashTable
 {
 private:
     static const int size = 10;
     Student table[size];
 
+    int hashfunction(int roll_no)
+    {
+        return roll_no / size;
+    }
+
 public:
     HashTable() {};
-    
 };
 //? 2. Define a structure node with member variables item of type Student and next pointer.
 
