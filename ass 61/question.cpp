@@ -248,9 +248,318 @@ public:
     }
 }; */
 
-//? 6. Define data structure Linked List using class template
+/* //? 6. Define data structure Linked List using class template
+#include <iostream>
+using namespace std;
+template <class X>
+struct node
+{
+    X item;
+    node<X> *next;
+};
+template <class X>
+class SLL
+{
+private:
+    node<X> *start;
 
-//? 7. Define data structure Doubly Linked List using class template
+public:
+    SLL()
+    {
+        start = NULL;
+    }
+    void Atstart(X data)
+    {
+        node<X> *newnode = new node<X>;
+        newnode->item = data;
+
+        newnode->next = start;
+        start = newnode;
+    }
+    void Atlast(X data)
+    {
+        node<X> *newnode = new node<X>;
+        newnode->item = data;
+        newnode->next = NULL;
+        if (start == NULL)
+        {
+            start = newnode;
+            return;
+        }
+        node<X> *temp = start;
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = newnode;
+    }
+    int search(X data)
+    {
+        int index = 0;
+        node<X> *t = start;
+        while (t != NULL)
+        {
+            if (t->item == data)
+                return index;
+            t = t->next;
+            index++;
+        }
+        return -1;
+    }
+    void afterNode(X key, X data)
+    {
+        node<X> *t = start;
+        while (t != NULL)
+        {
+            if (t->item == key)
+                break;
+            t = t->next;
+        }
+        if (t == NULL)
+        {
+            cout << key << " Not Found in List." << endl;
+            return;
+        }
+        node<X> *newnode = new node<X>;
+        newnode->item = data;
+        newnode->next = t->next;
+        t->next = newnode;
+    }
+    void delFirst()
+    {
+        if (start == NULL)
+        {
+            cout << "List is Empty." << endl;
+            return;
+        }
+        if (start->next == NULL)
+        {
+            delete start;
+            start = NULL;
+            return;
+        }
+        node<X> *t = start;
+        start = start->next;
+        delete t;
+    }
+    void delLast()
+    {
+        if (start == NULL)
+        {
+            cout << "List is Empty." << endl;
+            return;
+        }
+        if (start->next == NULL)
+        {
+            delete start;
+            start = NULL;
+        }
+        else
+        {
+            node<X> *t = start;
+            node<X> *p = NULL;
+            while (t->next != NULL)
+            {
+                p = t;
+                t = t->next;
+            }
+            p->next = NULL;
+            delete t;
+        }
+    }
+    void delNode(X data)
+    {
+        if (start == NULL)
+        {
+            return;
+        }
+        if (start->item == data)
+        {
+            delete start;
+            start = NULL;
+            return;
+        }
+        node<X> *t = start;
+        while (t->next->item != data || t != NULL)
+        {
+            t = t->next;
+        }
+        if (t != NULL)
+        {
+            node<X> *p = t->next;
+            t->next = t->next->next;
+            delete p;
+        }
+    }
+    ~SLL()
+    {
+        while (start != NULL)
+            delFirst();
+    }
+}; */
+
+/* //? 7. Define data structure Doubly Linked List using class template
+#include <iostream>
+using namespace std;
+template <class X>
+struct node
+{
+    node<X> *prev;
+    X item;
+    node<X> *next;
+};
+template <class X>
+class DLL
+{
+private:
+    node<X> *start;
+
+public:
+    DLL()
+    {
+        start = NULL;
+    }
+    void Atstart(X data)
+    {
+        node<X> *newnode = new node<X>;
+        newnode->item = data;
+        newnode->prev = NULL;
+
+        newnode->next = start;
+        if (start != NULL)
+        {
+            start->prev = newnode;
+        }
+        start = newnode;
+    }
+    void Atlast(X data)
+    {
+        node<X> *newnode = new node<X>;
+        newnode->item = data;
+        newnode->next = NULL;
+        if (start == NULL)
+        {
+            newnode->prev = NULL;
+            start = newnode;
+            return;
+        }
+        node<X> *temp = start;
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        newnode->prev = temp;
+        temp->next = newnode;
+    }
+    int search(X data)
+    {
+        int index = 0;
+        node<X> *t = start;
+        while (t != NULL)
+        {
+            if (t->item == data)
+                return index;
+            t = t->next;
+            index++;
+        }
+        return -1;
+    }
+    void afterNode(X key, X data)
+    {
+        node<X> *t = start;
+        while (t != NULL)
+        {
+            if (t->item == key)
+                break;
+            t = t->next;
+        }
+        if (t == NULL)
+        {
+            cout << key << " Not Found in List." << endl;
+            return;
+        }
+        node<X> *newnode = new node<X>;
+        newnode->item = data;
+        newnode->next = t->next;
+        newnode->prev = t;
+        if (t->next != NULL)
+        {
+            t->next->prev = newnode;
+        }
+        t->next = newnode;
+    }
+    void delFirst()
+    {
+        if (start == NULL)
+        {
+            cout << "List is Empty." << endl;
+            return;
+        }
+        if (start->next == NULL)
+        {
+            delete start;
+            start = NULL;
+            return;
+        }
+        node<X> *t = start;
+        start = start->next;
+        start->prev = NULL;
+        delete t;
+    }
+    void delLast()
+    {
+        if (start == NULL)
+        {
+            cout << "List is Empty." << endl;
+            return;
+        }
+        if (start->next == NULL)
+        {
+            delete start;
+            start = NULL;
+        }
+        else
+        {
+            node<X> *t = start;
+            while (t->next != NULL)
+            {
+                t = t->next;
+            }
+            t->prev->next = NULL;
+            delete t;
+        }
+    }
+    void delNode(X data)
+    {
+        if (start == NULL)
+        {
+            return;
+        }
+        if (start->item == data)
+        {
+            delete start;
+            start = NULL;
+            return;
+        }
+        node<X> *t = start;
+        while (t->next->item != data || t != NULL)
+        {
+            t = t->next;
+        }
+        if (t != NULL)
+        {
+            node<X> *p = t->next;
+            p->next->prev = t;
+            t->next = t->next->next;
+            delete p;
+        }
+    }
+    ~DLL()
+    {
+        while (start != NULL)
+            delFirst();
+    }
+}; */
 
 //? 8. Define data structure Stack using class template
 
