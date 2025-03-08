@@ -1,5 +1,6 @@
-/* #include <iostream>
+#include <iostream>
 #include <stdio.h>
+#include <string.h>
 using namespace std;
 template <class X>
 class Array
@@ -13,7 +14,7 @@ public:
     Array();
     Array(Array &); // deep copy
     Array &operator=(const Array &);
-    void createArray(X);
+    void createArray(int);
     void insert(int, X);
     void append(X);
     X getItem(int);
@@ -38,13 +39,13 @@ public:
     ~Array();
 };
 
-template <class X>      // class ke bahar define h isliye her function ke phle ye likhna pdega
-Array<class X>::Array() // Array <class X> , ab direct class name ki jagah esa likhna h
+template <class X> // class ke bahar define h isliye her function ke phle ye likhna pdega
+Array<X>::Array()  // Array <class X> , ab direct class name ki jagah esa likhna h
 {
     ptr = NULL;
 }
 template <class X>
-Array<class X>::Array(Array &arr)
+Array<X>::Array(Array &arr)
 {
     capicity = arr.capicity;
     lastindex = arr.lastindex;
@@ -55,7 +56,7 @@ Array<class X>::Array(Array &arr)
     }
 }
 template <class X>
-Array<class X> &Array<class X>::operator=(const Array &arr)
+Array<X> &Array<X>::operator=(const Array &arr)
 {
     capicity = arr.capicity;
     lastindex = arr.lastindex;
@@ -72,7 +73,7 @@ Array<class X> &Array<class X>::operator=(const Array &arr)
 }
 
 template <class X>
-void Array<class X>::createArray(X c)
+void Array<X>::createArray(int c)
 {
     this->capicity = c;
     lastindex = -1;
@@ -80,11 +81,11 @@ void Array<class X>::createArray(X c)
     {
         delete[] ptr;
     }
-    ptr = new int[capicity];
+    ptr = new X[capicity];
 }
 
 template <class X>
-void Array<class X>::insert(int index, X value)
+void Array<X>::insert(int index, X value)
 {
     if (index < 0 || index > lastindex + 1)
     {
@@ -102,7 +103,7 @@ void Array<class X>::insert(int index, X value)
 }
 
 template <class X>
-void Array<class X>::append(X value)
+void Array<X>::append(X value)
 {
     if (isFull())
     {
@@ -115,7 +116,7 @@ void Array<class X>::append(X value)
 }
 
 template <class X>
-X Array<class X>::getItem(int index)
+X Array<X>::getItem(int index)
 {
     if (index < 0 || index > lastindex)
     {
@@ -126,19 +127,19 @@ X Array<class X>::getItem(int index)
 }
 
 template <class X>
-bool Array<class X>::isEmpty()
+bool Array<X>::isEmpty()
 {
     return lastindex == -1;
 }
 
 template <class X>
-bool Array<class X>::isFull()
+bool Array<X>::isFull()
 {
     return lastindex == capicity - 1;
 }
 
 template <class X>
-void Array<class X>::delValue(X value)
+void Array<X>::delValue(X value)
 {
     int i;
     for (i = 0; i <= lastindex; i++)
@@ -162,7 +163,7 @@ void Array<class X>::delValue(X value)
 }
 
 template <class X>
-void Array<class X>::delIndex(int index)
+void Array<X>::delIndex(int index)
 {
     if (index < 0 || index > lastindex)
     {
@@ -177,7 +178,7 @@ void Array<class X>::delIndex(int index)
 }
 
 template <class X>
-void Array<class X>::edit(int index, X value)
+void Array<X>::edit(int index, X value)
 {
     if (index < 0 || index > lastindex)
     {
@@ -188,19 +189,19 @@ void Array<class X>::edit(int index, X value)
 }
 
 template <class X>
-int Array<class X>::count()
+int Array<X>::count()
 {
     return lastindex + 1;
 }
 
 template <class X>
-int Array<class X>::getCapicity()
+int Array<X>::getCapicity()
 {
     return capicity;
 }
 
 template <class X>
-void Array<class X>::sort()
+void Array<X>::sort()
 {
     int i, j, temp;
     for (i = 0; i <= lastindex; i++)
@@ -219,7 +220,7 @@ void Array<class X>::sort()
 }
 
 template <class X>
-X Array<class X>::greatest()
+X Array<X>::greatest()
 {
     int i, max = 0;
     for (i = 0; i <= lastindex; i++)
@@ -231,7 +232,7 @@ X Array<class X>::greatest()
 }
 
 template <class X>
-X Array<class X>::smallest()
+X Array<X>::smallest()
 {
     int i, min = ptr[0];
     for (i = 0; i <= lastindex; i++)
@@ -243,7 +244,7 @@ X Array<class X>::smallest()
 }
 
 template <class X>
-bool Array<class X>::search(X data)
+bool Array<X>::search(X data)
 {
     int i;
     for (i = 0; i <= lastindex; i++)
@@ -255,7 +256,7 @@ bool Array<class X>::search(X data)
 }
 
 template <class X>
-X Array<class X>::sum_of_all_elements()
+X Array<X>::sum_of_all_elements()
 {
     int sum = 0;
     int i;
@@ -267,7 +268,7 @@ X Array<class X>::sum_of_all_elements()
 }
 
 template <class X>
-X Array<class X>::average()
+X Array<X>::average()
 {
     float sum = 0;
     int i;
@@ -279,7 +280,7 @@ X Array<class X>::average()
 }
 
 template <class X>
-void Array<class X>::rotate_right()
+void Array<X>::rotate_right()
 {
     int i;
     int temp = ptr[lastindex];
@@ -291,7 +292,7 @@ void Array<class X>::rotate_right()
 }
 
 template <class X>
-void Array<class X>::remove_duplicate()
+void Array<X>::remove_duplicate()
 {
     int i, j;
     for (i = 0; i <= lastindex; i++)
@@ -323,7 +324,7 @@ void Array<class X>::remove_duplicate()
 }
 
 template <class X>
-X Array<class X>::second_greatest()
+X Array<X>::second_greatest()
 {
     if (lastindex < 1)
     {
@@ -343,7 +344,7 @@ X Array<class X>::second_greatest()
 }
 
 template <class X>
-void Array<class X>::swap(X i1, X i2)
+void Array<X>::swap(X i1, X i2)
 {
     if (i1 < 0 || i1 > lastindex || i2 < 0 || i2 > lastindex)
     {
@@ -357,7 +358,7 @@ void Array<class X>::swap(X i1, X i2)
 }
 
 template <class X>
-void Array<class X>::display()
+void Array<X>::display()
 {
     int i;
     for (i = 0; i <= lastindex; i++)
@@ -367,14 +368,14 @@ void Array<class X>::display()
 }
 
 template <class X>
-Array<class X>::~Array()
+Array<X>::~Array()
 {
     delete[] ptr;
     ptr = NULL;
 }
 int main()
 {
-    Array<int> a1;  // Array < typename > krke object bnana h , yaha int as a data type pass ho rha h
+    Array<int> a1; // Array < typename > krke object bnana h , yaha int as a data type pass ho rha h
     a1.createArray(5);
 
     a1.insert(0, 6);
@@ -384,23 +385,28 @@ int main()
     a1.insert(4, 11);
     a1.insert(5, 10);
 
-    cout << "Before Sorting: ";
+    cout << "int: ";
     a1.display();
-
-    // a1.sort();
-
-    // cout << "After Sorting: ";
-    // a1.display();
-
-    // cout << a1.smallest();
     cout << endl;
-    // a1.rotate_right();
 
-    // a1.remove_duplicate();
-    // a1.display();
+    Array<float> a2;
+    a2.createArray(4);
+    a2.insert(0, 0.5);
+    a2.insert(1, 3.5);
+    a2.insert(2, 5.5);
+    a2.insert(3, 6.5);
+    cout << "Float: ";
+    a2.display();
+    cout << endl;
 
-    // cout << a1.second_greatest();
-    a1.swap(3, 4);
-    a1.display();
+    Array<string> a3;
+    a3.createArray(4);
+    a3.insert(0, "Anuj");
+    a3.insert(1, "Bhanu");
+    a3.insert(2, "Anurag");
+    a3.insert(3, "chandan");
+    cout << "string: ";
+    a3.display();
+
     return 0;
-} */
+}
