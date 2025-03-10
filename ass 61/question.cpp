@@ -4,16 +4,25 @@
 #include <iostream>
 using namespace std;
 template <typename X>
-X greater(X a, X b)
+X getMax(X a, X b)
 {
     return a > b ? a : b;
+}
+int main()
+{
+    int a, b;
+    cout << "Enter two integers: ";
+    cin >> a >> b;
+    cout << "Greater value is: " << getMax(a, b) << endl;
+    cout << "Greater value is: " << getMax(6.5, 13.5) << endl;
+    cout << "Greater value is: " << getMax('A', 'Z') << endl;
 } */
 
 /* //? 2. Define a function template to print values of an array of any type.
 #include <iostream>
 using namespace std;
 template <typename X>
-void printArray(X arr[], int size)
+void printArray(const X arr[], int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -23,9 +32,13 @@ void printArray(X arr[], int size)
 }
 int main()
 {
-    int arr[]={1,2,3,4,5};
-    float arr[]={2.5,3.5,4.5,6.5,7.5};
-    char arr[5];
+    int arr1[] = {1, 2, 3, 4, 5};
+    float arr2[] = {2.5, 3.5, 4.5, 6.5, 7.5};
+    string arr3[2] = {"Anurag", "Anuj"};
+
+    printArray(arr1,5);
+    printArray(arr2,5);
+    printArray(arr3,2);
 } */
 
 /* //? 3. Define a function template to sort an array of any type.
@@ -42,6 +55,27 @@ void sortArray(X arr[], int size)
                 swap(arr[j], arr[j + 1]);
         }
     }
+}
+template <typename X>
+void printArray(const X arr[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+int main()
+{
+    int a1[] = {10, 50, 40, 30, 70};
+    string a2[] = {"Damoh", "Indore", "Bhopal"};
+
+    sortArray(a1, 5);
+    printArray(a1, 5);
+
+    sortArray(a2, 3);
+    printArray(a2, 3);
+    return 0;
 } */
 
 /* //? 4. Define data structure Array using class template
@@ -139,7 +173,41 @@ public:
     {
         delete[] ptr;
     }
-}; */
+};
+int main()
+{
+    Array<int> a1(5); // Array < typename > krke object bnana h , yaha int as a data type pass ho rha h
+
+    a1.insert(0, 6);
+    a1.insert(1, 3);
+    a1.insert(2, 9);
+    a1.insert(3, 5);
+    a1.insert(4, 11);
+    a1.insert(5, 10);
+
+    cout << "int: ";
+    a1.display();
+    cout << endl;
+
+    Array<float> a2(4);
+    a2.insert(0, 0.5);
+    a2.insert(1, 3.5);
+    a2.insert(2, 5.5);
+    a2.insert(3, 6.5);
+    cout << "Float: ";
+    a2.display();
+    cout << endl;
+
+    Array<string> a3(4);
+    a3.insert(0, "Anuj");
+    a3.insert(1, "Bhanu");
+    a3.insert(2, "Anurag");
+    a3.insert(3, "chandan");
+    cout << "string: ";
+    a3.display();
+
+    return 0;
+} */
 
 /* //? 5. Define data structure Dynamic Array using class template
 #include <iostream>
@@ -170,6 +238,10 @@ public:
         delete[] ptr;
         ptr = temp;
         capacity *= 2;
+    }
+    int getCapacity()
+    {
+        return capacity;
     }
     void insert(int index, X data)
     {
@@ -246,7 +318,43 @@ public:
     {
         delete[] ptr;
     }
-}; */
+};
+int main()
+{
+    Array<int> a1(5); // Array < typename > krke object bnana h , yaha int as a data type pass ho rha h
+
+    a1.insert(0, 6);
+    a1.insert(1, 3);
+    a1.insert(2, 9);
+    a1.insert(3, 5);
+    a1.insert(4, 11);
+    a1.insert(5, 10);
+
+    cout << "int: ";
+    a1.display();
+    cout << endl;
+
+    Array<float> a2(4);
+    a2.insert(0, 0.5);
+    a2.insert(1, 3.5);
+    a2.insert(2, 5.5);
+    a2.insert(3, 6.5);
+    cout << "Float: ";
+    a2.display();
+    cout << endl;
+
+    Array<string> a3(2);
+    a3.insert(0, "Anuj");
+    a3.insert(1, "Bhanu");
+    cout << "capacity: " << a3.getCapacity() << endl;
+    a3.insert(2, "Anurag");
+    a3.insert(3, "chandan");
+    cout << "New capacity : " << a3.getCapacity() << endl;
+    cout << "string: ";
+    a3.display();
+
+    return 0;
+} */
 
 /* //? 6. Define data structure Linked List using class template
 #include <iostream>
@@ -380,7 +488,7 @@ public:
             return;
         }
         node<X> *t = start;
-        while (t->next->item != data || t != NULL)
+        while (t != NULL && t->next != NULL && t->next->item != data)
         {
             t = t->next;
         }
@@ -391,12 +499,41 @@ public:
             delete p;
         }
     }
+    void display()
+    {
+        node<X> *t = start;
+        while (t != NULL)
+        {
+            cout << t->item << " ";
+            t = t->next;
+        }
+        cout << endl;
+    }
     ~SLL()
     {
         while (start != NULL)
             delFirst();
     }
-}; */
+};
+int main()
+{
+    SLL<int> s1;
+    s1.Atstart(10);
+    s1.Atstart(15);
+    s1.Atstart(20);
+    s1.afterNode(15,45);
+
+    s1.display();
+    s1.delNode(15);
+    s1.display();
+
+    SLL<string> s2;
+    s2.Atlast("Taj Mahal");
+    s2.Atstart("Lal kila");
+    s2.afterNode("Lal kila","Hampi");
+    s2.display();
+    return 0;
+}  */
 
 /* //? 7. Define data structure Doubly Linked List using class template
 #include <iostream>
@@ -529,48 +666,82 @@ public:
             delete t;
         }
     }
-    void delNode(X data)
+    void delNode(int data)
     {
         if (start == NULL)
-        {
             return;
-        }
-        if (start->item == data)
+        if (start->item == data && start->next == NULL)
         {
             delete start;
             start = NULL;
             return;
         }
-        node<X> *t = start;
-        while (t->next->item != data || t != NULL)
+        if (start->item == data && start->next != NULL)
         {
+            delFirst();
+            return;
+        }
+        node<X> *temp = start;
+        while (temp != NULL && temp->next != NULL && temp->next->item != data)
+            temp = temp->next;
+        if (temp == NULL || temp->next == NULL)
+        {
+            cout << data << " is not in list" << endl;
+            return;
+        }
+        node<X> *t = temp->next;
+        if (temp->next->next != NULL)
+        {
+            temp->next = temp->next->next;
+            temp->next->prev = temp;
+        }
+        else
+        {
+            temp->next = NULL;
+        }
+
+        delete t;
+    }
+    void display()
+    {
+        node<X> *t = start;
+        while (t != NULL)
+        {
+            cout << t->item << " ";
             t = t->next;
         }
-        if (t != NULL)
-        {
-            node<X> *p = t->next;
-            p->next->prev = t;
-            t->next = t->next->next;
-            delete p;
-        }
+        cout << endl;
     }
     ~DLL()
     {
         while (start != NULL)
             delFirst();
     }
-}; */
+};
+int main()
+{
+    DLL<int> d1;
+    d1.Atstart(10);
+    d1.Atstart(30);
+    d1.Atstart(20);
+    d1.Atlast(50);
+    d1.afterNode(50, 60);
+    d1.display();
+    d1.delNode(10);
+    d1.display();
+    return 0;
+} */
 
 /* //? 8. Define data structure Stack using class template
 #include <iostream>
 using namespace std;
-template<class X>
+template <class X>
 class STACK
 {
 private:
     int capacity;
     int top;
-    X*ptr;
+    X *ptr;
 
 public:
     STACK(int size)
@@ -646,7 +817,27 @@ public:
     {
         delete[] ptr;
     }
-}; */
+};
+int main()
+{
+    STACK<string> s1(5);
+    s1.push("India");
+    s1.push("China");
+    s1.push("Russia");
+    s1.push("America");
+
+    cout << s1.peek() << endl;
+    cout << s1.pop() << endl;
+    cout << s1.stackUnderflow() << endl;
+
+    STACK<string> s2 = s1;
+    cout << s2.peek() << endl;
+    s2.push("Europe");
+    s1 = s2;
+    cout << s1.peek() << endl;
+
+    return 0;
+} */
 
 /* //! stack using linked list
 #include <iostream>
@@ -783,7 +974,18 @@ public:
             delete temp;
         }
     }
-}; */
+};
+int main()
+{
+    STACK<float> s1;
+    s1.push(5.5);
+    s1.push(6.5);
+    s1.push(7.5);
+    s1.push(8.5);
+
+    cout << s1.peek() << endl;
+    return 0;
+} */
 
 /* //? 9. Define data structure Queue using class template
 #include <iostream>
@@ -943,10 +1145,27 @@ public:
     }
     ~Queue()
     {
-        if(ptr!=NULL)
-          delete[] ptr;
+        if (ptr != NULL)
+            delete[] ptr;
     }
-}; */
+};
+int main()
+{
+    Queue<int> q1(5);
+    q1.insert(10);
+    q1.insert(20);
+    q1.insert(30);
+    q1.insert(50);
+
+    q1.viewFront();
+    q1.viewRear();
+
+    q1.delFront();
+    q1.viewFront();
+
+    cout << q1.count() << endl;
+    return 0;
+} */
 
 /* //! Queue using linked list
 #include <iostream>
@@ -1023,7 +1242,7 @@ public:
             rear = newnode;
         }
     }
-    void viewRaer()
+    void viewRear()
     {
         if (rear == NULL)
         {
@@ -1076,7 +1295,21 @@ public:
         while (front != NULL)
             delFront();
     }
-}; */
+};
+int main()
+{
+    Queue<char> q1;
+    q1.insert('A');
+    q1.insert('B');
+    q1.insert('C');
+
+    q1.viewFront();
+    q1.viewRear();
+    q1.viewFront();
+
+    cout << q1.count() << endl;
+    return 0;
+} */
 
 /* //? 10. Define data structure deque using class template
 #include <iostream>
@@ -1105,7 +1338,7 @@ public:
     ~Deque();
 };
 template <class X>
-Deque<class X>::Deque()
+Deque<X>::Deque()
 {
     capacity = 0;
     front = -1;
@@ -1113,7 +1346,7 @@ Deque<class X>::Deque()
     ptr = NULL;
 }
 template <class X>
-Deque<class X>::Deque(int c)
+Deque<X>::Deque(int c)
 {
     capacity = c;
     front = -1;
@@ -1121,10 +1354,10 @@ Deque<class X>::Deque(int c)
     if (capacity <= 0)
         ptr = NULL;
     else
-        ptr = new int[capacity];
+        ptr = new X[capacity];
 }
 template <class X>
-Deque<class X>::Deque(const Deque &d)
+Deque<X>::Deque(const Deque &d)
 {
     if (d.capacity == 0)
     {
@@ -1141,7 +1374,7 @@ Deque<class X>::Deque(const Deque &d)
     }
 }
 template <class X>
-const Deque<class X> &Deque<class X>::operator=(const Deque &d)
+const Deque<X> &Deque<X>::operator=(const Deque &d)
 {
     if (this != &d)
     {
@@ -1150,7 +1383,7 @@ const Deque<class X> &Deque<class X>::operator=(const Deque &d)
             delete[] ptr;
         }
         if (d.capacity == 0)
-            return;
+            return *this;
         capacity = d.capacity;
         front = d.front;
         rear = d.rear;
@@ -1163,7 +1396,7 @@ const Deque<class X> &Deque<class X>::operator=(const Deque &d)
     return *this;
 }
 template <class X>
-void Deque<class X>::insertBack(X data)
+void Deque<X>::insertBack(X data)
 {
     if (overflow())
     {
@@ -1184,7 +1417,7 @@ void Deque<class X>::insertBack(X data)
     ptr[rear] = data;
 }
 template <class X>
-void Deque<class X>::insertFront(X data)
+void Deque<X>::insertFront(X data)
 {
     if (overflow())
     {
@@ -1213,7 +1446,7 @@ void Deque<class X>::insertFront(X data)
     }
 }
 template <class X>
-void Deque<class X>::delFront()
+void Deque<X>::delFront()
 {
     if (front == -1)
     {
@@ -1235,7 +1468,7 @@ void Deque<class X>::delFront()
     }
 }
 template <class X>
-void Deque<class X>::delBack()
+void Deque<X>::delBack()
 {
     if (front == -1)
     {
@@ -1257,43 +1490,61 @@ void Deque<class X>::delBack()
     }
 }
 template <class X>
-bool Deque<class X>::overflow()
+bool Deque<X>::overflow()
 {
     return (front == 0 && rear == capacity - 1 || front == rear + 1);
 }
 template <class X>
-bool Deque<class X>::underflow()
+bool Deque<X>::underflow()
 {
     return front == -1;
 }
 template <class X>
-X Deque<class X>::getFront()
+X Deque<X>::getFront()
 {
     if (underflow())
     {
         cout << "Deque is Empty." << endl;
-        return;
+        throw out_of_range("Empty");
     }
     return ptr[front];
 }
 template <class X>
-X Deque<class X>::getBack()
+X Deque<X>::getBack()
 {
     if (underflow())
     {
         cout << "Deque is Empty." << endl;
-        return;
+        throw out_of_range("Empty");
     }
     return ptr[rear];
 }
 template <class X>
-Deque<class X>::~Deque()
+Deque<X>::~Deque()
 {
     if (ptr != NULL)
         delete[] ptr;
+}
+int main()
+{
+    Deque<int> d1(5);
+    d1.insertFront(10);
+    d1.insertFront(20);
+    d1.insertBack(30);
+    d1.insertBack(40);
+
+    cout << d1.getBack() << endl;
+    cout << d1.getFront() << endl;
+
+    d1.delBack();
+    cout << d1.getBack() << endl;
+
+    d1.delFront();
+    cout << d1.getFront() << endl;
+    return 0;
 } */
 
-/*//! Deque using Doubly linked list 
+/* //! Deque using Doubly linked list
 #include <iostream>
 using namespace std;
 template <class X>
@@ -1317,19 +1568,19 @@ public:
     void insertRear(X data);
     void delFront();
     void delRear();
-    X *getFront();
-    X *getRear();
+    X getFront();
+    X getRear();
     bool isEmpty();
     ~Deque();
 };
 template <class X>
-Deque<class X>::Deque()
+Deque<X>::Deque()
 {
     front = NULL;
     rear = NULL;
 }
 template <class X>
-Deque<class X>::Deque(const Deque &d)
+Deque<X>::Deque(const Deque &d)
 {
     front = NULL;
     rear = NULL;
@@ -1343,7 +1594,7 @@ Deque<class X>::Deque(const Deque &d)
     }
 }
 template <class X>
-const Deque<class X> &Deque<class X>::operator=(const Deque &d)
+const Deque<X> &Deque<X>::operator=(const Deque &d)
 {
     if (this != &d)
     {
@@ -1353,7 +1604,7 @@ const Deque<class X> &Deque<class X>::operator=(const Deque &d)
         }
         if (d.front == NULL)
             return *this;
-        node <X>*t = d.front;
+        node<X> *t = d.front;
         while (t != NULL)
         {
             insertRear(t->item);
@@ -1363,7 +1614,7 @@ const Deque<class X> &Deque<class X>::operator=(const Deque &d)
     return *this;
 }
 template <class X>
-void Deque<class X>::insertFront(X data)
+void Deque<X>::insertFront(X data)
 {
     node<X> *newnode = new node<X>;
     newnode->item = data;
@@ -1382,7 +1633,7 @@ void Deque<class X>::insertFront(X data)
     }
 }
 template <class X>
-void Deque<class X>::insertRear(X data)
+void Deque<X>::insertRear(X data)
 {
     node<X> *newnode = new node<X>;
     newnode->item = data;
@@ -1401,7 +1652,7 @@ void Deque<class X>::insertRear(X data)
     }
 }
 template <class X>
-void Deque<class X>::delFront()
+void Deque<X>::delFront()
 {
     if (front == NULL)
     {
@@ -1422,7 +1673,7 @@ void Deque<class X>::delFront()
     delete t;
 }
 template <class X>
-void Deque<class X>::delRear()
+void Deque<X>::delRear()
 {
     if (front == NULL)
     {
@@ -1443,33 +1694,52 @@ void Deque<class X>::delRear()
     delete t;
 }
 template <class X>
-X *Deque<class X>::getFront()
+X Deque<X>::getFront()
 {
     if (front == NULL)
     {
         cout << "Deque is Empty." << endl;
-        return NULL;
+        throw out_of_range("Empty");
     }
     return front->item;
 }
 template <class X>
-X *Deque<class X>::getRear()
+X Deque<X>::getRear()
 {
     if (front == NULL)
     {
         cout << "Deque is Empty." << endl;
-        return NULL;
+        throw out_of_range("Empty");
     }
     return rear->item;
 }
 template <class X>
-bool Deque<class X>::isEmpty()
+bool Deque<X>::isEmpty()
 {
     return (front == NULL);
 }
 template <class X>
-Deque<class X>::~Deque()
+Deque<X>::~Deque()
 {
     while (front != NULL)
         delFront();
+}
+int main()
+{
+    Deque<int> d1;
+    d1.insertFront(20);
+    d1.insertFront(30);
+    d1.insertFront(40);
+    d1.insertRear(50);
+
+    cout << d1.getFront() << endl;
+    cout << d1.getRear() << endl;
+
+    d1.delFront();
+    d1.delRear();
+    cout << d1.getFront() << endl;
+    cout << d1.getRear() << endl;
+
+    cout << d1.isEmpty() << endl;
+    return 0;
 } */
